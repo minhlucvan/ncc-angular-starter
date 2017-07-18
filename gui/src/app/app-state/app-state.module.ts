@@ -1,20 +1,11 @@
-import { initReducers } from './app.reducers';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AppStateService } from 'app/app-state/services/app-state.service';
 
 @NgModule({
   imports: [
-    StoreModule.provideStore(initReducers),
-    RouterStoreModule.connectRouter(),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
   ],
   declarations: [],
   exports: [
-    StoreModule,
-    RouterStoreModule,
-    StoreDevtoolsModule
   ]
 })
 export class AppStateModule {
@@ -22,6 +13,7 @@ export class AppStateModule {
     return {
       ngModule: AppStateModule,
       providers: [
+        AppStateService
       ]
     };
   }

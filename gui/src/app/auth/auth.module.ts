@@ -1,10 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { GUARDS } from './guards/index';
 
 @NgModule({
   imports: [
-    CommonModule
   ],
   declarations: []
 })
-export class AuthModule { }
+export class AuthModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: AuthModule,
+      providers: [
+        ...GUARDS
+      ]
+    };
+  }
+}
+

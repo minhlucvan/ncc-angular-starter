@@ -1,7 +1,6 @@
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { GUARDS } from './guards/index';
 import { AppStateModule } from './app-state/app-state.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,12 +16,11 @@ import { GatewayModule } from './gateway/gateway.module';
     BrowserModule,
     AppRoutingModule,
     AppStateModule,
-    SharedModule,
-    AuthModule,
-    GatewayModule
+    SharedModule.forRoot(),
+    AuthModule.forRoot(),
+    GatewayModule.forRoot()
   ],
   providers: [
-    ...GUARDS
   ],
   bootstrap: [AppComponent]
 })

@@ -6,15 +6,13 @@ import {
   RequestOptionsArgs,
   Response,
   RequestMethod,
-  Request,
-  Connection,
-  ConnectionBackend } from '@angular/http';
+  Request } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 export enum Action { QueryStart, QueryStop }
 
 @Injectable()
-export class AuthHttp {
+export class ApiService {
   process: EventEmitter<any> = new EventEmitter<any>();
   authFailed: EventEmitter<any> = new EventEmitter<any>();
 
