@@ -3,20 +3,46 @@ import {
   Http,
   Headers,
   RequestOptions,
-  RequestOptionsArgs,
   Response,
   RequestMethod,
-  Request } from '@angular/http';
+  Request,
+  ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { AuthStateModel } from 'app/entities/app-state/auth-state/auth-state.model';
 
 export enum Action { QueryStart, QueryStop }
+
+export interface RequestOptionsArgs {
+    url?: string | null;
+    method?: string | RequestMethod | null;
+    /** @deprecated from 4.0.0. Use params instead. */
+    search?: string | URLSearchParams | {
+        [key: string]: any | any[];
+    } | null;
+    params?: string | URLSearchParams | {
+        [key: string]: any | any[];
+    } | null;
+    headers?: Headers | null;
+    body?: any;
+    withCredentials?: boolean | null;
+    responseType?: ResponseContentType | null;
+    auth?: string | boolean | null;
+}
+
 
 @Injectable()
 export class ApiService {
   process: EventEmitter<any> = new EventEmitter<any>();
   authFailed: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _http: Http) { }
+  private _token: string;
+
+  constructor(
+    private _http: Http,
+    private _authState: AuthStateModel
+  ) {
+    _authState.token$.subscribe(this._setToken);
+   }
 
   public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Get, url, null, options);
@@ -42,22 +68,29 @@ export class ApiService {
     return this._request(RequestMethod.Head, url, null, options);
   }
 
+  private _setToken(token: string) {
+    this._token = token;
+  }
+
   private _buildAuthHeader(): string {
-    return localStorage.getItem('authToken');
+    return this._token;
   }
 
   private _request(method: RequestMethod, url: string, body?: string, options?: RequestOptionsArgs): Observable<Response> {
     const requestOptions = new RequestOptions(Object.assign({
       method: method,
       url: url,
-      body: body
+      body: body,
+      auth: true
     }, options));
 
     if (!requestOptions.headers) {
       requestOptions.headers = new Headers();
     }
 
-    requestOptions.headers.set('Authorization', this._buildAuthHeader());
+    if ( options.auth ) {
+      requestOptions.headers.set('Authorization', this._buildAuthHeader());
+    }
 
     return Observable.create((observer) => {
       this.process.next(Action.QueryStart);

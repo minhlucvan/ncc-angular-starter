@@ -1,5 +1,5 @@
-import { SimpleLayoutComponent } from './../../shared/components/simple-layout/simple-layout.component';
-import { LoginComponent } from './components/login/login.component';
+import { SimpleLayoutComponent } from 'app/shared/components/simple-layout/simple-layout.component';
+import { LoginComponent } from './login.component';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

@@ -32,6 +32,7 @@ export class AppStateModel implements State<AppState> {
         public authModel: AuthStateModel,
         public uiModel: UiStateModel,
     ) {
+        console.log('init app state', arguments);
         this.state$ = this._stateService.state();
     }
 

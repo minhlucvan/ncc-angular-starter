@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { LOCAL_STORAGE_KEY } from 'app/constants/state';
-import { ActionReducer } from '@ngrx/store';
+import { ActionReducer, combineReducers } from '@ngrx/store';
 import { localStorageSync, LocalStorageConfig } from 'ngrx-store-localstorage';
 
 /**
@@ -19,19 +19,20 @@ import { compose } from '@ngrx/core/compose';
  * ensure that none of the reducers accidentally mutates the state.
  */
 import { storeFreeze } from 'ngrx-store-freeze';
+import { appStateReducer } from 'app/app-state/app-state.reducers';
 
 const localStorageConfig: LocalStorageConfig = { keys: [LOCAL_STORAGE_KEY] };
 
-export function createReducer(rootReducer): (state: any, action: any) => any {
+export function createReducer(rootReducer): ((state: any, action: any) => any) {
 
-  const developmentReducer: ActionReducer<any> = compose(storeFreeze, localStorageSync(localStorageConfig), rootReducer);
-  const productionReducer: ActionReducer<any> = compose(localStorageSync(localStorageConfig), rootReducer);
+  const developmentReducer: ActionReducer<any> = compose(storeFreeze, combineReducers)(compose(appStateReducer, rootReducer));
+  const productionReducer: ActionReducer<any> = combineReducers(compose(appStateReducer, rootReducer));
 
   if (environment.production) {
       return productionReducer;
-    } else {
+  } else {
       return developmentReducer;
-    }
+  }
 }
 
 export function createInitialState(state) {

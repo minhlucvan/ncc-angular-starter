@@ -17,7 +17,7 @@ export class AppStateService<T> {
    * Already return a clone of the current state.
    */
   public state(): Observable<T> {
-    return this.store.select();
+    return this.store.select(state => state);
   }
 
 
