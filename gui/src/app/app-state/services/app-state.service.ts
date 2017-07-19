@@ -1,46 +1,39 @@
-import { Injectable } from '@angular/core';
+import { SetStateAction } from './../app.actions';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
+import { Injectable, EventEmitter } from '@angular/core';
 
-export interface AppState {
-  [key: string]: any;
-}
 
 @Injectable()
-export class AppStateService {
+export class AppStateService<T> {
 
-  public _state: AppState = { };
+  saveEvent: EventEmitter<any> = new EventEmitter();
+
+  constructor(
+    public store: Store<T>
+  ) { }
 
   /**
    * Already return a clone of the current state.
    */
-  public get state() {
-    return this._state = this._clone(this._state);
+  public state(): Observable<T> {
+    return this.store.select();
   }
+
+
   /**
-   * Never allow mutation
+   * Internally mutate our state.
    */
-  public set state(value) {
-    throw new Error('do not mutate the `.state` directly');
+  public set(paths: string[], value: any) {
+    this.store.dispatch(new SetStateAction(paths, value));
   }
 
-  public get(prop?: any) {
-    /**
-     * Use our state getter for the clone.
-     */
-    const state = this.state;
-    return state.hasOwnProperty(prop) ? state[prop] : state;
-  }
-
-  public set(prop: string, value: any) {
-    /**
-     * Internally mutate our state.
-     */
-    return this._state[prop] = value;
-  }
-
-  private _clone(object: AppState) {
-    /**
-     * Simple object clone.
-     */
-    return JSON.parse(JSON.stringify( object ));
+  /**
+   * Select a store value by selector
+   * selector can be a sequence of strings or a pure function take a state and return a property
+   * @see https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse
+   */
+  public select<V>(pathOrMapFn: any, ...paths: string[]): Observable<V> {
+    return this.store.select(pathOrMapFn, ...paths);
   }
 }

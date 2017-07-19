@@ -34,9 +34,11 @@
             {
                 "order": [
                     "static-field",
-                    "instance-field",
                     "static-method",
-                    "instance-method"
+                    "public-instance-field",
+                    "private-instance-field",
+                    "public-instance-method",
+                    "private-instance-method"
                 ]
             }
         ],
@@ -70,7 +72,12 @@
         "no-unnecessary-initializer": true,
         "no-unused-expression": true,
         "no-use-before-declare": true,
-        "no-unused-variable": [true, { "ignore-pattern": "^_" }],
+        "no-unused-variable": [
+            true,
+            {
+                "ignore-pattern": "^_"
+            }
+        ],
         "no-var-keyword": true,
         "object-literal-sort-keys": false,
         "one-line": [

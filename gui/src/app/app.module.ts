@@ -1,3 +1,4 @@
+import { STATE_MODELS } from './entities/app-state/index';
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -15,12 +16,13 @@ import { GatewayModule } from './gateway/gateway.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AppStateModule,
+    AppStateModule.forRoot(),
     SharedModule.forRoot(),
     AuthModule.forRoot(),
     GatewayModule.forRoot()
   ],
   providers: [
+    ...STATE_MODELS
   ],
   bootstrap: [AppComponent]
 })

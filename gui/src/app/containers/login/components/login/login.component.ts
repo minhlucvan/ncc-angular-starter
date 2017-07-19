@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   constructor(
   ) { }
 
+  // tslint:disable-next-line:member-ordering
   ngOnInit() {
   }
 

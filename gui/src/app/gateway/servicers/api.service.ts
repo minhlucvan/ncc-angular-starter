@@ -18,10 +18,6 @@ export class ApiService {
 
   constructor(private _http: Http) { }
 
-  private _buildAuthHeader(): string {
-    return localStorage.getItem('authToken');
-  }
-
   public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Get, url, null, options);
   }
@@ -44,6 +40,10 @@ export class ApiService {
 
   public head(url: string, options?: RequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Head, url, null, options);
+  }
+
+  private _buildAuthHeader(): string {
+    return localStorage.getItem('authToken');
   }
 
   private _request(method: RequestMethod, url: string, body?: string, options?: RequestOptionsArgs): Observable<Response> {

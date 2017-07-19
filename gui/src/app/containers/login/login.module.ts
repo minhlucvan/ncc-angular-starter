@@ -1,3 +1,4 @@
+import { AppStateModule } from './../../app-state/app-state.module';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from 'app/shared/shared.module';
