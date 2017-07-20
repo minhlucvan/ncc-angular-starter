@@ -8,7 +8,7 @@ function setStateHandler(state: any, action: Action) {
     const value = setState.value;
 
     const nextState = _.set(state, paths.join('.'), value);
-    return nextState;
+    return Object.assign({}, nextState);
 }
 
 const handlers = {

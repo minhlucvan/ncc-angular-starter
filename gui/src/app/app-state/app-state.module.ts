@@ -5,12 +5,14 @@ import { StoreModule } from '@ngrx/store';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { createReducer, createInitialState } from './app.reducers';
+import { appStateReducer } from 'app/app-state/app-state.reducers';
+
+// const reducer = createReducer(AppStateModel.reducer);
+const initialState = createInitialState(AppStateModel.initialState);
 
 @NgModule({
   imports: [
-    StoreModule.provideStore(
-      createReducer(AppStateModel.reducer),
-      createInitialState(AppStateModel.initialState)),
+    StoreModule.provideStore(appStateReducer, initialState),
     RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension()
   ],

@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment';
-import { LOCAL_STORAGE_KEY } from 'app/constants/state';
+import { LOCAL_STORAGE_KEY } from 'app/constants/state.constants';
 import { ActionReducer, combineReducers } from '@ngrx/store';
 import { localStorageSync, LocalStorageConfig } from 'ngrx-store-localstorage';
 

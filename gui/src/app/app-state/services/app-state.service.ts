@@ -2,6 +2,8 @@ import { SetStateAction } from './../app.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Rx';
 import { Injectable, EventEmitter } from '@angular/core';
+import { environment } from 'environments/environment';
+import { AppService } from 'app/app.service';
 
 
 @Injectable()
@@ -10,8 +12,11 @@ export class AppStateService<T> {
   saveEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    public store: Store<T>
-  ) { }
+    public store: Store<T>,
+    private app: AppService
+  ) {
+   app.log('Construct AppStateService');
+  }
 
   /**
    * Already return a clone of the current state.

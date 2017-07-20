@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { State } from './../state.interface';
 import { Injectable } from '@angular/core';
 import { AuthState, LoginStatus, STATUS_UNLOGIN } from './auth-state.interface';
+import { AppService } from "app/app.service";
 
 @Injectable()
 export class AuthStateModel implements State<AuthState> {
@@ -43,8 +44,10 @@ export class AuthStateModel implements State<AuthState> {
     readonly permissionsSelectorFromRoot = createSelector(this.selector, this.permissionsSelector);
 
     constructor(
+        public app: AppService,
         private _stateService: AppStateService<AppState>
     ) {
+        app.log('Construct AuthStateModel');
         this.state$ = this._stateService.select(this.selector);
         this.user$ = this._stateService.select(this.userSelectorFromRoot);
         this.user$ = this._stateService.select(this.tokenSelectorFromRoot);

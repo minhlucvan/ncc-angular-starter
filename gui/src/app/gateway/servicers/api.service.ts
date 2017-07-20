@@ -6,26 +6,16 @@ import {
   Response,
   RequestMethod,
   Request,
-  ResponseContentType} from '@angular/http';
+  ResponseContentType,
+  RequestOptionsArgs} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AuthStateModel } from 'app/entities/app-state/auth-state/auth-state.model';
 
+export * from '@angular/http';
+
 export enum Action { QueryStart, QueryStop }
 
-export interface RequestOptionsArgs {
-    url?: string | null;
-    method?: string | RequestMethod | null;
-    /** @deprecated from 4.0.0. Use params instead. */
-    search?: string | URLSearchParams | {
-        [key: string]: any | any[];
-    } | null;
-    params?: string | URLSearchParams | {
-        [key: string]: any | any[];
-    } | null;
-    headers?: Headers | null;
-    body?: any;
-    withCredentials?: boolean | null;
-    responseType?: ResponseContentType | null;
+export interface ApiRequestOptionsArgs extends RequestOptionsArgs {
     auth?: string | boolean | null;
 }
 
@@ -44,27 +34,27 @@ export class ApiService {
     _authState.token$.subscribe(this._setToken);
    }
 
-  public get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+  public get(url: string, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Get, url, null, options);
   }
 
-  public post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+  public post(url: string, body: any, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Post, url, body, options);
   }
 
-  public put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+  public put(url: string, body: any, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Put, url, body, options);
   }
 
-  public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+  public delete(url: string, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Delete, url, null, options);
   }
 
-  public patch(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+  public patch(url: string, body: any, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Patch, url, body, options);
   }
 
-  public head(url: string, options?: RequestOptionsArgs): Observable<Response> {
+  public head(url: string, options?: ApiRequestOptionsArgs): Observable<Response> {
     return this._request(RequestMethod.Head, url, null, options);
   }
 
@@ -76,7 +66,7 @@ export class ApiService {
     return this._token;
   }
 
-  private _request(method: RequestMethod, url: string, body?: string, options?: RequestOptionsArgs): Observable<Response> {
+  private _request(method: RequestMethod, url: string, body?: any, options?: ApiRequestOptionsArgs): Observable<Response> {
     const requestOptions = new RequestOptions(Object.assign({
       method: method,
       url: url,

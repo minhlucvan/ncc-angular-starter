@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { GatewayModule } from './gateway/gateway.module';
+import { AppService } from 'app/app.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { GatewayModule } from './gateway/gateway.module';
     GatewayModule.forRoot()
   ],
   providers: [
+    AppService,
     ...STATE_MODELS
   ],
   bootstrap: [AppComponent]

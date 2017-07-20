@@ -4,6 +4,7 @@ import { COMPONENTS } from './components/index';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SERVICES } from './services/index';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { SERVICES } from './services/index';
   declarations: [
     ...COMPONENTS,
     ...PIPES,
+    LoadingComponent,
   ],
   exports: [
     CommonModule,
