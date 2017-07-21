@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 import { AppStateModel } from 'app/entities/app-state/app-state.model';
-import { AuthStateModel } from 'app/entities/app-state/auth-state/auth-state.model';
+import { AuthStateModel } from 'app/entities/auth-state/auth-state.model';
 
 @Component({
   selector: 'app-login',

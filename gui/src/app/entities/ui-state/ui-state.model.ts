@@ -1,15 +1,12 @@
-import { AppState } from '../app-state.interface';
-import { AppStateService } from './../../../app-state/services/app-state.service';
-import { Observable } from 'rxjs/Rx';
-import { State } from './../state.interface';
-import { Injectable } from '@angular/core';
-import { UiState } from './ui-state.interface';
-import { createSelector } from "reselect/lib";
-import { AppService } from "app/app.service";
 
-export interface LoadingState {
-    show: boolean;
-}
+import { Observable } from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { UiState, LoadingState } from './ui-state.interface';
+import { createSelector } from 'reselect';
+import { AppService } from 'app/app.service';
+import { State } from 'app/entities/app-state/state.interface';
+import { AppStateService } from 'app/app-state/services/app-state.service';
+import { AppState } from 'app/entities/app-state/app-state.interface';
 
 @Injectable()
 export class UiStateModel implements State<UiState> {
@@ -31,7 +28,7 @@ export class UiStateModel implements State<UiState> {
     readonly loadingSelector = state => state.loading;
 
     // tslint:disable-next-line:member-ordering
-    readonly loadingSelectorFromRoot = createSelector(this.selector, this.loadingSelector);
+    readonly loadingSelectorFromRoot = state => this.loadingSelector(this.selector(state));
 
     constructor(
         private _stateService: AppStateService<AppState>,

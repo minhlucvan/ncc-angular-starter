@@ -1,13 +1,13 @@
 import { combineReducers } from '@ngrx/store';
 import { LOCAL_STORAGE_KEY } from 'app/constants/state.constants';
-import { UiStateModel } from './ui-state/ui-state.model';
-import { AuthStateModel } from './auth-state/auth-state.model';
 import { Observable } from 'rxjs/Rx';
 import { AppStateService } from 'app/app-state/services/app-state.service';
 import { AppState } from './app-state.interface';
 import { Injectable } from '@angular/core';
 import { State } from './state.interface';
 import { AppService } from 'app/app.service';
+import { AuthStateModel } from 'app/entities/auth-state/auth-state.model';
+import { UiStateModel } from 'app/entities/ui-state/ui-state.model';
 
 @Injectable()
 export class AppStateModel implements State<AppState> {

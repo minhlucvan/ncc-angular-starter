@@ -1,5 +1,5 @@
-import { Permission } from './../../permission/permission.interface';
 import { User } from 'app/entities/user/user.interface';
+import { Permission } from 'app/entities/permission/permission.interface';
 export const STATUS_LOGIN = 'LOGIN';
 export const STATUS_UNLOGIN = 'UNLOGIN';
 

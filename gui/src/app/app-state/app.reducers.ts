@@ -23,16 +23,16 @@ import { appStateReducer } from 'app/app-state/app-state.reducers';
 
 const localStorageConfig: LocalStorageConfig = { keys: [LOCAL_STORAGE_KEY] };
 
+function reducer(rootReducer: any): ActionReducer<any> {
+  return (state: any, action: any) => {
+    let newtState = rootReducer(state, action);
+    newtState = appStateReducer(newtState, action);
+    return newtState;
+  };
+}
+
 export function createReducer(rootReducer): ((state: any, action: any) => any) {
-
-  const developmentReducer: ActionReducer<any> = compose(storeFreeze, combineReducers)(compose(appStateReducer, rootReducer));
-  const productionReducer: ActionReducer<any> = combineReducers(compose(appStateReducer, rootReducer));
-
-  if (environment.production) {
-      return productionReducer;
-  } else {
-      return developmentReducer;
-  }
+  return compose(localStorageSync(localStorageConfig))(appStateReducer);
 }
 
 export function createInitialState(state) {

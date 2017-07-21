@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { AuthStateModel } from 'app/entities/app-state/auth-state/auth-state.model';
+import { AuthStateModel } from 'app/entities/auth-state/auth-state.model';
 import { Observable } from 'rxjs/Rx';
-import { AuthState, STATUS_LOGIN, LoginStatus } from 'app/entities/app-state/auth-state/auth-state.interface';
+import { AuthState, STATUS_LOGIN, LoginStatus } from 'app/entities/auth-state/auth-state.interface';
 import { ApiService, Response } from 'app/gateway/servicers/api.service';
 import { API } from 'app/constants/api.constants';
 

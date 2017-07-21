@@ -1,13 +1,13 @@
 import { User } from 'app/entities/user/user.interface';
 import { Permission } from 'app/entities/permission/permission.interface';
 import { createSelector } from 'reselect';
-import { AppState } from '../app-state.interface';
 import { AppStateService } from 'app/app-state/services/app-state.service';
 import { Observable } from 'rxjs/Rx';
-import { State } from './../state.interface';
 import { Injectable } from '@angular/core';
 import { AuthState, LoginStatus, STATUS_UNLOGIN } from './auth-state.interface';
-import { AppService } from "app/app.service";
+import { AppService } from 'app/app.service';
+import { State } from 'app/entities/app-state/state.interface';
+import { AppState } from 'app/entities/app-state/app-state.interface';
 
 @Injectable()
 export class AuthStateModel implements State<AuthState> {
@@ -34,14 +34,10 @@ export class AuthStateModel implements State<AuthState> {
     readonly statusSelector = state => state.status;
     readonly permissionsSelector = state => state.permissions;
 
-    // tslint:disable-next-line:member-ordering
-    readonly userSelectorFromRoot = createSelector(this.selector, this.userSelector);
-    // tslint:disable-next-line:member-ordering
-    readonly tokenSelectorFromRoot = createSelector(this.selector, this.tokenSelector);
-    // tslint:disable-next-line:member-ordering
-    readonly statusSelectorFromRoot = createSelector(this.selector, this.statusSelector);
-    // tslint:disable-next-line:member-ordering
-    readonly permissionsSelectorFromRoot = createSelector(this.selector, this.permissionsSelector);
+    readonly userSelectorFromRoot = state => this.userSelector(this.selector(state));
+    readonly tokenSelectorFromRoot = state => this.tokenSelector(this.selector(state));
+    readonly statusSelectorFromRoot = state => this.statusSelector(this.selector(state));
+    readonly permissionsSelectorFromRoot = state => this.permissionsSelector(this.selector(state));
 
     constructor(
         public app: AppService,

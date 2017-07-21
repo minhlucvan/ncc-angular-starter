@@ -9,7 +9,7 @@ import {
   ResponseContentType,
   RequestOptionsArgs} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AuthStateModel } from 'app/entities/app-state/auth-state/auth-state.model';
+import { AuthStateModel } from 'app/entities/auth-state/auth-state.model';
 
 export * from '@angular/http';
 

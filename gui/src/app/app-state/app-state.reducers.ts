@@ -1,4 +1,4 @@
-import { SET_STATE, SetStateAction } from './app.actions';
+import { SET_STATE, SetStateAction } from './app-state.actions';
 import { Action } from '@ngrx/store';
 import * as _ from 'lodash';
 
@@ -7,8 +7,9 @@ function setStateHandler(state: any, action: Action) {
     const paths = setState.paths;
     const value = setState.value;
 
-    const nextState = _.set(state, paths.join('.'), value);
-    return Object.assign({}, nextState);
+    const nextState: any = _.set(state, paths.join('.'), value);
+    const nextStateClone = Object.assign({}, nextState);
+    return nextStateClone;
 }
 
 const handlers = {
