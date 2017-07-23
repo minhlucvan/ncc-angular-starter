@@ -20,21 +20,14 @@ import { compose } from '@ngrx/core/compose';
  */
 import { storeFreeze } from 'ngrx-store-freeze';
 import { appStateReducer } from 'app/app-state/app-state.reducers';
+import { AppStateModel } from 'app/entities/app-state/app-state.model';
 
 const localStorageConfig: LocalStorageConfig = { keys: [LOCAL_STORAGE_KEY] };
 
-function reducer(rootReducer: any): ActionReducer<any> {
-  return (state: any, action: any) => {
-    let newtState = rootReducer(state, action);
-    newtState = appStateReducer(newtState, action);
-    return newtState;
-  };
-}
+ const root = compose(localStorageSync(localStorageConfig))(appStateReducer);
 
-export function createReducer(rootReducer): ((state: any, action: any) => any) {
-  return compose(localStorageSync(localStorageConfig))(appStateReducer);
-}
-
-export function createInitialState(state) {
-  return state;
+export function reducer(state: any, action: any) {
+  let newtState = AppStateModel.reducer(state, action);
+  newtState = root(newtState, action);
+  return Object.assign({}, newtState);
 }

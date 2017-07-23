@@ -5,10 +5,13 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SERVICES } from './services/index';
 import { LoadingComponent } from './components/loading/loading.component';
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+
 
 @NgModule({
   imports: [
     CommonModule,
+    SlimLoadingBarModule.forRoot(),
     RouterModule
   ],
   declarations: [
@@ -18,6 +21,7 @@ import { LoadingComponent } from './components/loading/loading.component';
   ],
   exports: [
     CommonModule,
+    SlimLoadingBarModule,
     ...COMPONENTS,
     ...PIPES
   ]

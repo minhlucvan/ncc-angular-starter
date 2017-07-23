@@ -8,10 +8,11 @@ import { State } from './state.interface';
 import { AppService } from 'app/app.service';
 import { AuthStateModel } from 'app/entities/auth-state/auth-state.model';
 import { UiStateModel } from 'app/entities/ui-state/ui-state.model';
+import { compose } from '@ngrx/core/compose';
 
 @Injectable()
 export class AppStateModel implements State<AppState> {
-    static reducer = combineReducers({
+    static reducer = compose(combineReducers)({
         auth: AuthStateModel.reducer,
         ui: UiStateModel.reducer
     });

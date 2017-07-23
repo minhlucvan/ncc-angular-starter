@@ -3,7 +3,7 @@
 > An Angular starter kit featuring **Angular 4**, Modular, Lazy/pre - Loading, [Ahead of Time Compile](https://angular.io/guide/aot-compiler), [Auth 2](https://oauth.net/2/), [Ngrx](https://gist.github.com/btroncone/a6e4347326749f938510) , Services, Tests, E2E), [Karma](https://karma-runner.github.io/1.0/index.html), TypeScript, [@types](https://basarat.gitbooks.io/typescript/docs/styleguide/styleguide.html), [TsLint](https://palantir.github.io/tslint/), and [lodash](https://lodash.com/) By [#NCCSOFT](http://nccsoft.vn/).
 
 <p align="center">
-<img  src="https://lh6.googleusercontent.com/qYdlaOUk9-mFYmaEvBGeh2bMqtnIS03Isf_vPoo1F0N20SD6s_DEOPiRgCcRP0s6IuJyA7E3DDDr1j8=w1920-h935" alt="NCC Angular Starter" titlt="NCCSOFT" width="135" height="135"  />
+<img  src="http://nccsoft.vn/images/NCCSOFT_logo.png" alt="NCC Angular Starter" titlt="NCCSOFT" width="135" height="135"  />
 <span>&nbsp;&nbsp;&nbsp;</span>
 <img src="http://mobileangularui.com/assets/img/features/sec-angular-fig.png"  alt="NCC Angular Starter" title="Angular Starter" width="135" height="135" />
 </p>
@@ -80,13 +80,29 @@ We are using git for version control there are serverals git flow depends on pro
 
 before each commit make sure that yor code has passed the requrements the check list here:
 
-<img src="https://cdn.pixabay.com/photo/2016/03/30/00/19/check-1289751_960_720.png" height="16" /> All file and folder are in used       
-<img src="https://cdn.pixabay.com/photo/2016/03/30/00/19/check-1289751_960_720.png" height="16" /> Naming correct [naming convention](#naming-covention)              
-<img src="https://cdn.pixabay.com/photo/2016/03/30/00/19/check-1289751_960_720.png" height="16" /> Pass all unit test      
-<img src="https://cdn.pixabay.com/photo/2016/03/30/00/19/check-1289751_960_720.png" height="16" /> Has no tslint error    
+✅ All file and folder are in used       
+✅ Naming correct [naming convention](#naming-covention)              
+✅ Pass all unit test      
+✅ Has no tslint error    
 
 
 ## <img src="http://img.freepik.com/free-icon/web-programming-code-on-window_318-74341.jpg?size=338&ext=jpg" height="16"/> Commands
+
+* run server 
+```bash
+ng s
+```
+
+* testing 
+```bash
+npm test
+```
+
+* lint
+```bash
+npm lint
+```
+@see: https://github.com/angular/angular-cli
 
 ## Table of Contents
 
@@ -99,6 +115,7 @@ before each commit make sure that yor code has passed the requrements the check 
     * [troubleshoting and debugging](#troubleshoting-and-debuging)
 * [Configuration](#configuration)
 * [Coding Convention Giude](#coding-convention-guide)
+* [AoT Donts](#aot-donts)
 * [Routing](#routing)
 * [State Management](#state-management)
 * [Modules](#modules)
@@ -110,99 +127,248 @@ before each commit make sure that yor code has passed the requrements the check 
 
 ## File Structure
 
+This is the file tructure of the template. we also use some symbols:
+
+* **``</>``** to mark forder contains a angular 2 component
+* **``{M}``** to mark forder contains a angular 2 module
+* **``{I}``** to mark forder contains a angular 2 service 
+
 ```
 project
-├──README.md                                                                   * quick introduction
-├──.angular-cli.json                                                           * agular cli config file    
-├──.editorconfig                                                               * edittor config file
-├──.gitignore                                                                  * git ignore config file
-├──karma.conf.js                                                               * karma config file (testing)    
-├──package-lock.json                                                           * npm packages change history
-├──package.json                                                                * npm dependences config
-├──protractor.conf.js                                                          * protractor config file (e2e testing)
-├──tsconfig.json                                                               * typescript transpiler config file
-├──tslint.json                                                                 * tslint config file (linting)   
+├──README.md                                                          * quick introduction
+├──.angular-cli.json                                                  * agular cli config file    
+├──.editorconfig                                                      * edittor config file
+├──.gitignore                                                         * git ignore config file
+├──karma.conf.js                                                      * karma config file (testing)    
+├──package-lock.json                                                  * npm packages change history
+├──package.json                                                       * npm dependences config
+├──protractor.conf.js                                                 * protractor config file (e2e testing)
+├──tsconfig.json                                                      * typescript transpiler config file
+├──tslint.json                                                        * tslint config file (linting)   
 │
-└───e2e                                                                         * end to end testing scripts 
+└───e2e                                                               * end to end testing scripts 
 │  |...
 |  └──
 │   
-└───src                                                                         * source files
-|   ├───app                                                                     * app root
-|   |   ├───app-routing
-|   |   |    ├───app-routing.module.ts
-|   |   |    └──custom.preloader.ts
+└───src                                                                * source files
+|   ├───app                                                            * app root
+|   |   ├───app-routing                                                * app routing module  
+|   |   |    ├───app-routing.module.ts                                 * routing preloader
+|   |   |    └───custom.preloader.ts                                   
 |   |   |
-|   |   ├───app-state
-|   |   |    ├───services
-|   |   |    ├───app-state.actions.ts
-|   |   |    ├───app-state.module.ts
-|   |   |    ├───app-state.reducers.ts
-|   |   |    └──app.reducers.ts
+|   |   ├───app-state                                                  * app state module
+|   |   |    └───services                                              * services
+|   |   |        └───app-state {I}                                     * app-state service
+|   |   |    
+|   |   |    ├───app-state.actions.ts                                  * define set state acctions
+|   |   |    ├───app-state.module.ts                                   * define app state module
+|   |   |    ├───app-state.reducers.ts                                 * define app state reducers
+|   |   |    └───app.reducers.ts                                       * define app root reducer
 |   |   |   
-|   |   ├───auth
-|   |   ├───constants
-|   |   ├───containers
-|   |   ├───entities
-|   |   ├───gateway
-|   |   ├───shared
-|   |   ├───app.component.css
-|   |   ├───app.component.html
-|   |   ├───File app.component.ts
-|   |   ├───app.module.ts
-|   |   ├───app.module.ts
-|   |   └──app.service.ts
+|   |   ├───auth                                                       * authenticate module
+|   |   |    ├───guards                                                * define guards
+|   |   |    |   ├───auth                                              * guard check user has login
+|   |   |    |   ├───permission                                        * guards check user has permisstion to visit a router
+|   |   |    |   └───index.ts                                          * export all guards here
+|   |   |    |
+|   |   |    ├───services                                              * define authenticate services
+|   |   |    |   └───auth {I}
+|   |   |    |   
+|   |   |    └───auth.module.ts                                        * define auth module
+|   |   |    
+|   |   ├────constants                                                 * place to store app constants
+|   |   |    ├───api.constants.ts                                      * constants use for api call
+|   |   |    ├───auth..constants.ts                                    * constants for state management
+|   |   |    ├───state..constants.ts
+|   |   |    ├───ui.constants.ts                                       * constants for ui  
+|   |   |    └───index.ts                                              * export all constants   
+|   |   |    
+|   |   ├───containers                                                 * where to place sub modules   
+|   |   |    ├───error                                                 * module for error pages
+|   |   |    |   ├───page-not-found <>                                 * page not found component                       
+|   |   |    |   ├───error-routing.module.ts                           * error routing
+|   |   |    |   └───error.module.ts                                   * define error module   
+|   |   |    |
+|   |   |    ├───home                                               * module for home page
+|   |   |    |   ├───home.compomemt.ts                              * home page component
+|   |   |    |   ├───home.compoent.html                             * template for home component
+|   |   |    |   ├───home.compoent.scss                             * style for home component 
+|   |   |    |   ├───home-routing.module.ts                         * define home routing module
+|   |   |    |   └───home.module.ts                                 * define home module 
+|   |   |    |
+|   |   |    └───login                                              * module for login page 
+|   |   |        ├───compoents                                      * define component here
+|   |   |        |   └───login-from </>                             * login form
+|   |   |        |
+|   |   |        ├───home.compomemt.ts                              * define home page
+|   |   |        ├───home.compoent.html                             * template for home page
+|   |   |        ├───home.compoent.scss                             * style for home page
+|   |   |        ├───home-routing.module.ts                         * home routing
+|   |   |        └───home.module.ts                                 * define home module
+|   |   |    
+|   |   ├───entities                                                * place to put our app interface and models
+|   |   |   ├───app-state                                           * define app state
+|   |   |   |   ├───app-state.interface.ts                             
+|   |   |   |   ├───state.interface.ts
+|   |   |   |   └───app-state.model.ts
+|   |   |   |
+|   |   |   ├───auth-state                                          * define auth state
+|   |   |   |   ├───auth.interface.ts
+|   |   |   |   └───auth-state.model.ts
+|   |   |   |
+|   |   |   ├───permission                                          * define permission
+|   |   |   |   ├───permission.interface.ts
+|   |   |   |   └───permission-state.model.ts
+|   |   |   |
+|   |   |   ├───sub-bag                                              * define sub bag
+|   |   |   |   ├───sub.interface.ts
+|   |   |   |   ├───sub-bag.interface.ts
+|   |   |   |   └───sub-bag.model.ts
+|   |   |   |
+|   |   |   ├───ui-state                                          * define ui state
+|   |   |   |   ├───ui-state.interface.ts
+|   |   |   |   └───ui-state.model.ts
+|   |   |   |
+|   |   |   ├───user                                              * define user
+|   |   |   |   ├───user.interface.ts
+|   |   |   |   └───user.model.ts
+|   |   |   |
+|   |   |   └───index.ts                                           * group and export our models   
+|   |   | 
+|   |   ├───gateway                                                * an http wraper  for call http api   
+|   |   |   ├───services
+|   |   |   |   └───api {i}                                        * api service
+|   |   |   | 
+|   |   |   └───gateway.module.ts                                  * define gateway module 
+|   |   |   
+|   |   ├───shared                                                 * share module for shared things bettweb whole app
+|   |   |   ├───components                                         * shared componets put here
+|   |   |   |   ├───loading </>                                    * loading spiner
+|   |   |   |   ├───main-layout </>                                * main layout    
+|   |   |   |   ├───simple--layout </>                             * simple layout
+|   |   |   |   └───index.ts                                       * export all shared components
+|   |   |   |   
+|   |   |   ├───pipes                                              * shared pipe
+|   |   |   |   └───indeex.ts                                      * export all pipes
+|   |   |   |   
+|   |   |   ├───services                                           * shared services 
+|   |   |   |   ├───alert {I}                                      * alert service
+|   |   |   |   ├───busy  {I}                                      * alert service
+|   |   |   |   └───index.ts                                       * export all service
+|   |   |   |   
+|   |   |   └───shared.module.ts                                   * define shared module
+|   |   |   
+|   |   ├───app.component.css                                      * app component style
+|   |   ├───app.component.html                                     * app component template
+|   |   ├───app.component.ts                                       * app component
+|   |   ├───app.module.ts                                          * root module                          
+|   |   └───app.service.ts                                         * define app module
 |   |
-|   ├───environments
-|   |   ├───environment.prod.ts
-|   |   └──environment.ts
+|   ├───environments                                               * environment fondig
+|   |   ├───environment.prod.ts                                    * use in production
+|   |   └───environment.ts                                         * use in development
 |   |  
-|   ├───assets
+|   ├───assets                                                     * bundle assets
 |   |   |...
-|   |   └──
+|   |   └───
 |   |
-|   ├───favicon.ico
-|   ├───index.html
-|   ├───main.ts
-|   ├───polyfills.ts
-|   ├───styles.css
-|   ├───File test.ts
-|   ├───tsconfig.app.json
-|   ├───tsconfig.spec.json
-|   └──typings.d.ts
+|   ├───favicon.ico                                                 * favirite icon
+|   ├───index.html                                                  * start html
+|   ├───main.ts                                                     * typescript entry point
+|   ├───polyfills.ts                                                * polyfill script for differerent browser (IE)
+|   ├───styles.scss                                                 * global style
+|   ├───test.ts                                                     * testing entry point
+|   ├───tsconfig.app.json                                           * pypescript config for app
+|   ├───tsconfig.spec.json                                          * test for tsconfig
+|   └───typings.d.ts                                                * declare uor global custom types
 | 
 ```
 
 ## Getting Started
 
 ### The Ideas
-### Dependencies
-### Installing
-### Running the app
+
+We built this template in order to create a standard for angular 2+ applications in serverals edges like file structure, coding conventions, dependences, tools and version control.
+
+We trying to resolve problems of an Enterprise front end applications such as perfoermace, team working, scalability and state predicable.
+
+This is not final standard, any  refactor and idea to improve things are welcome.
+
 ### Testing and Linting
 
-### Troubleshoting and Debugging
+We hightly recommened unit testings and tslint before each commit.
+
+Keep in mind: Code for maintainers.
+
+### Debugging
 
 > Install [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) and see docs for instructions to launch Chrome 
 
 The included `.vscode` automatically connects to the webpack development server on port `4200`.
 
+please see [How to debug an Angular application with Chrome and VS Code](https://offering.solutions/blog/articles/2016/10/16/how-to-debug-an-angular-application-with-chrome-and-vs-code/)
 
 ## Configuration
 
-## Coding Convention Giude
+config app prefix: `angular-cli.json`.
+
+## Coding Convention
+
+https://angular.io/guide/styleguide
+
+## AoT Donts
+
+The following are some things that will make AoT compile fail.
+
+Don’t use require statements for your templates or styles, use styleUrls and templateUrls, the angular2-template-loader plugin will change it to require at build time.
+Don’t use default exports.
+Don’t use form.controls.controlName, use form.get(‘controlName’)
+Don’t use control.errors?.someError, use control.hasError(‘someError’)
+Don’t use functions in your providers, routes or declarations, export a function and then reference that function name
+@Inputs, @Outputs, View or Content Child(ren), Hostbindings, and any field you use from the template or annotate for Angular should be public
+
+@see: https://github.com/rangle/angular-2-aot-sandbox
 
 ## Routing
 
+Routing root is in `app-routing.module.ts` we are using preload as default, so if you want to have new route you must define new module and using route module `forChild` to de fine child route. 
+
+Beside use for navigate betwen application pages we also can use route for represents page's state like show popup or show/hide specific components so that use can visit page in specific state, and we can easy to changes betwen states;
+
+learn more: [Give your modals URL address with Auxiliary Routes in Angular](https://netbasal.com/give-your-modals-url-address-with-auxiliary-routes-in-angular-eb76497c0bca)
+
 ## State Management
+
+We are using [@ngrx](https://github.com/ngrx) in core (app-state module) so ngrx are recomend way to manage state.
+
+let's learn why :https://angular-2-training-book.rangle.io/handout/state-management/
 
 ## Modules
 
+Each child module is and stand alone medule please try to reduce couped betwen modules.
+
+Each module has own it's depencences, child modules and components.
+
+Each module has it own route module, if they need an router.
+
 ## Entities
+
+Entities is base objects of application like state, business models etc. 
+
+Each entity has and interface and an model to implements behavior.
+
+We has 2 types of entity Injectable (sigleton) model  and UnInjectable entity.
 
 ## Services
 
+Agular 2 services.
+
 ## Components
+
+Agular 2 components.
+
+We use SCSS to style components.
+
 
 ## @Types
 

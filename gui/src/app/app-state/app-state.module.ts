@@ -4,14 +4,12 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import * as fromReducer from './app.reducers';
-
-const reducer = fromReducer.createReducer(AppStateModel.reducer);
-const initialState = fromReducer.createInitialState(AppStateModel.initialState);
+import { reducer } from './app.reducers';
+import { compose } from '@ngrx/core/compose';
 
 @NgModule({
   imports: [
-    StoreModule.provideStore(reducer, initialState),
+    StoreModule.provideStore(reducer, AppStateModel.initialState),
     RouterStoreModule.connectRouter(),
     StoreDevtoolsModule.instrumentOnlyWithExtension()
   ],

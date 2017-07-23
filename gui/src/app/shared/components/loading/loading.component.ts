@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { UiStateModel } from 'app/entities/ui-state/ui-state.model';
 import { Subscription, Observable } from 'rxjs/Rx';
-import { SubBag } from 'app/entities/Subs/subs.models';
 import { AppStateModel } from 'app/entities/app-state/app-state.model';
 import { AppStateService } from 'app/app-state/services/app-state.service';
 import { AppState } from 'app/entities/app-state/app-state.interface';
 import { LoadingState } from 'app/entities/ui-state/ui-state.interface';
+import { SubBag } from "app/entities/sub-bag/subs-bag.models";
 
 @Component({
   selector: 'app-loading',

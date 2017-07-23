@@ -22,7 +22,7 @@ export interface ApiRequestOptionsArgs extends RequestOptionsArgs {
 
 @Injectable()
 export class ApiService {
-  process: EventEmitter<any> = new EventEmitter<any>();
+  process: EventEmitter<Action> = new EventEmitter<Action>();
   authFailed: EventEmitter<any> = new EventEmitter<any>();
 
   private _token: string;
